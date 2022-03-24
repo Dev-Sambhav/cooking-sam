@@ -1,18 +1,21 @@
 // import styles
-import { Link } from "react-router-dom"
-import "./Navbar.css"
+import "./Navbar.css";
+
+import { Link } from "react-router-dom";
+import Searchbar from "./Searchbar";
 
 const Navbar = () => {
   return (
     <div className="navbar">
-        <nav>
-            <Link to="/" className="brand">
-                <h1>Cooking Sam</h1>
-            </Link>
-            <Link to="/create">Create</Link>
-        </nav>
+      <nav>
+        <Link to="/" className="brand">
+          <h1>Cooking Sam</h1>
+        </Link>
+        <Searchbar />
+        <Link to="/create">Create</Link>
+      </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
