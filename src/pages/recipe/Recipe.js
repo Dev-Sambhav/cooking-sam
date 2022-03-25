@@ -1,10 +1,12 @@
 import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
+import {useTheme} from "../../hooks/useTheme"
 
 // import styles
 import "./Recipe.css";
 const Recipe = () => {
+  const {mode} = useTheme();
   const history = useHistory();
   const { id } = useParams();
   const {
@@ -30,7 +32,7 @@ const Recipe = () => {
   }, [data, history]);
 
   return (
-    <div className="recipe">
+    <div className={`recipe ${mode}`}>
       {error && <p className="error">{error}</p>}
       {isLoading && <p className="loading">Loading...</p>}
       {recipe && (

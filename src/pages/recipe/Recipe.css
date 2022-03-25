@@ -40,5 +40,10 @@
   cursor: pointer;
   text-decoration: none;
   margin-top: 40px;
-  
+}
+
+/* dark mode */
+.recipe.dark {
+  background: #555;
+  color: #e4e4e4;
 }

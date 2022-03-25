@@ -1,31 +1,35 @@
-import { BrowserRouter, Switch,Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useTheme } from "./hooks/useTheme";
 // import styles
-import './App.css'
+import "./App.css";
 
 // import all the pages and components
-import Home from './pages/home/Home';
-import Create from './pages/create/Create';
-import Search from './pages/search/Search';
-import Recipe from './pages/recipe/Recipe';
-import Navbar from './components/Navbar';
+import Home from "./pages/home/Home";
+import Create from "./pages/create/Create";
+import Search from "./pages/search/Search";
+import Recipe from "./pages/recipe/Recipe";
+import Navbar from "./components/Navbar";
+import ThemeSelector from "./components/ThemeSelector";
 
 function App() {
+  const {mode} = useTheme();
   return (
-    <div className="App">
+    <div className={`App ${mode}`}>
       <BrowserRouter>
-      <Navbar/>
+        <Navbar />
+        <ThemeSelector />
         <Switch>
           <Route exact path="/">
-            <Home/>
+            <Home />
           </Route>
           <Route path="/search">
-            <Search/>
+            <Search />
           </Route>
           <Route path="/create">
-            <Create/>
+            <Create />
           </Route>
           <Route path="/recipe/:id">
-            <Recipe/>
+            <Recipe />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -33,4 +37,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
