@@ -16,6 +16,12 @@ export const useFetch = (url, method = "GET") => {
     });
   };
 
+  const deleteData = () => {
+    setOptions({
+      method: "DELETE",
+    });
+  };
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -52,10 +58,14 @@ export const useFetch = (url, method = "GET") => {
       fetchData(options);
     }
 
+    if (method === "DELETE" && options) {
+      fetchData(options);
+    }
+
     return () => {
       controller.abort();
     };
-  }, [url,method,options]);
+  }, [url, method, options]);
 
-  return { data, isLoading, error, postData };
+  return { data, isLoading, error, postData, deleteData };
 };

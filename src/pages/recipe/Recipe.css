@@ -27,3 +27,18 @@
   text-align: left;
   line-height: 1.5em;
 }
+
+.del-btn {
+  display: block;
+  width: 100px;
+  font-size: 1em;
+  color: #fff;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 4px;
+  background-color: #58249c;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 40px;
+  
+}

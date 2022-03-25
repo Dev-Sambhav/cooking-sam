@@ -1,15 +1,34 @@
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 
 // import styles
 import "./Recipe.css";
 const Recipe = () => {
+  const history = useHistory();
   const { id } = useParams();
   const {
     data: recipe,
     isLoading,
     error,
   } = useFetch(`http://localhost:8080/recipes/${id}`);
+
+  const { data, deleteData } = useFetch(
+    `http://localhost:8080/recipes/${id}`,
+    "DELETE"
+  );
+
+  // todo delete the item
+  const handleDelete = () => {
+    deleteData();
+  };
+
+  useEffect(() => {
+    if (data) {
+      history.push("/");
+    }
+  }, [data, history]);
+
   return (
     <div className="recipe">
       {error && <p className="error">{error}</p>}
@@ -24,6 +43,9 @@ const Recipe = () => {
             ))}
           </ul>
           <p className="method">{recipe.method}</p>
+          <button className="del-btn" onClick={handleDelete}>
+            Delete
+          </button>
         </>
       )}
     </div>
