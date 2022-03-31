@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { useFetch } from "../../hooks/useFetch";
 import { useHistory } from "react-router-dom";
+import useFirestore from "../../hooks/useFirestore";
 
 // import styles
 import "./Create.css";
@@ -11,25 +11,27 @@ const Create = () => {
   const [newIngredients, setNewIngredients] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const ingredientInput = useRef(null);
-  const { postData, data } = useFetch("http://localhost:8080/recipes", "POST");
   const history = useHistory();
+  const {addDocument,data}= useFirestore("recipes")
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postData({
+    const doc = {
       title,
       method,
       cookingTime: cookingTime + " minutes",
       ingredients,
-    });
+    };
+    addDocument(doc)
   };
 
-  // redirect to user to home page after submiting data to json
+  // redirect to user to home page after submiting data to firestore
   useEffect(() => {
     if (data) {
       history.push("/");
     }
-  }, [data,history]);
+  }, [data, history]);
 
   const handleAdd = (e) => {
     e.preventDefault();

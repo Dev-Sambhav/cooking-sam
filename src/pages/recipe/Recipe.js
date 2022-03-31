@@ -1,35 +1,32 @@
 import { useParams, useHistory } from "react-router-dom";
-import { useEffect } from "react";
-import { useFetch } from "../../hooks/useFetch";
-import {useTheme} from "../../hooks/useTheme"
+import { useTheme } from "../../hooks/useTheme";
+import useDocument from "../../hooks/useDocument";
+import useFirestore from "../../hooks/useFirestore";
 
 // import styles
 import "./Recipe.css";
 const Recipe = () => {
-  const {mode} = useTheme();
-  const history = useHistory();
+  const { mode } = useTheme();
   const { id } = useParams();
-  const {
-    data: recipe,
-    isLoading,
-    error,
-  } = useFetch(`http://localhost:8080/recipes/${id}`);
-
-  const { data, deleteData } = useFetch(
-    `http://localhost:8080/recipes/${id}`,
-    "DELETE"
-  );
+  const { data: recipe, error, isLoading } = useDocument("recipes", id);
+  const { deleteDocument, updateDocument } = useFirestore("recipes");
+  const history = useHistory();
 
   // todo delete the item
   const handleDelete = () => {
-    deleteData();
-  };
-
-  useEffect(() => {
-    if (data) {
+    deleteDocument(id);
+    if (recipe) {
       history.push("/");
     }
-  }, [data, history]);
+  };
+
+  // todo update the item
+  const handleUpdate = () => {
+    const doc = {
+      title: "Greek Salad",
+    };
+    updateDocument(id, doc);
+  };
 
   return (
     <div className={`recipe ${mode}`}>
@@ -47,6 +44,9 @@ const Recipe = () => {
           <p className="method">{recipe.method}</p>
           <button className="del-btn" onClick={handleDelete}>
             Delete
+          </button>
+          <button className="del-btn" onClick={handleUpdate}>
+            Update
           </button>
         </>
       )}
